@@ -8,21 +8,7 @@ RSpec.describe Item, type: :model do
   describe '商品出品' do
     context '商品出品ができるとき' do
       it 'imageとtitle、explanationとcategory_id、condition_idとdelivery_charge_id、region_idとnum_of_day_id、priceが存在すれば登録できる' do
-        user = FactoryBot.create(:user)
-        item_params = {
-          image: fixture_file_upload('public/images/test2.png'),
-          title: 'Item',
-          explanation: 'item',
-          category_id: '2',
-          condition_id: '2',
-          delivery_charge_id: '2',
-          region_id: '2',
-          num_of_day_id: '2',
-          price: 500,
-          user_id: user.id
-        }
-        item = Item.new(item_params)
-        expect(item).to be_valid
+        expect(@item).to be_valid
       end
     end
 
@@ -97,6 +83,20 @@ RSpec.describe Item, type: :model do
         @item.price = '２０００'
         @item.valid?
         expect(@item.errors[:price]).to include("is not a number")
+      end
+      it 'userが紐づいていなければ出品できない' do
+        item = Item.new(
+          title: "Aerodynamic Paper Keyboard",
+          price: 500,
+          explanation: "Fugiat animi et quasi.",
+          category_id: 2,
+          condition_id: 2,
+          delivery_charge_id: 2,
+          region_id: 2,
+          num_of_day_id: 2,
+          user_id: nil 
+        )
+        expect(item).not_to be_valid
       end
     end
   end
