@@ -85,18 +85,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors[:price]).to include("is not a number")
       end
       it 'userが紐づいていなければ出品できない' do
-        item = Item.new(
-          title: "Aerodynamic Paper Keyboard",
-          price: 500,
-          explanation: "Fugiat animi et quasi.",
-          category_id: 2,
-          condition_id: 2,
-          delivery_charge_id: 2,
-          region_id: 2,
-          num_of_day_id: 2,
-          user_id: nil 
-        )
-        expect(item).not_to be_valid
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors[:user]).to include("can't be blank")
       end
     end
   end
