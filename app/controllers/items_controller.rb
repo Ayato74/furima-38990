@@ -55,7 +55,8 @@ class ItemsController < ApplicationController
   end
 
   def move_to_edit
-    unless user_signed_in? && current_user == @item.user
+    if user_signed_in? && current_user == @item.user && !@item.order.present?
+    else
       redirect_to root_path
     end
   end

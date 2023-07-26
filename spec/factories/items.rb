@@ -8,10 +8,9 @@ FactoryBot.define do
     region_id          {'2'}
     num_of_day_id      {'2'}
     price              {'500'}
+    association :user
     after(:build) do |item|
       item.image.attach(io: File.open('public/images/test2.png'), filename: 'test2.png')
-      user = FactoryBot.create(:user)
-      item.user = user
     end
   end
 end
