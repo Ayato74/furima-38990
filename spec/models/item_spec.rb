@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.build(:item)
+    @item = FactoryBot.create(:item)
   end
 
   describe '商品出品' do
@@ -84,6 +84,7 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors[:price]).to include("is not a number")
       end
+
       it 'userが紐づいていなければ出品できない' do
         @item.user = nil
         @item.valid?
